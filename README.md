@@ -17,8 +17,10 @@ The image is based on the [official Python 3 Docker image](https://hub.docker.co
 To launch the Terraform CLI:
 
 ```bash
-docker run -it -v ${PWD}:/workspace harrisonai/terraform:latest
+docker run -it -v ${PWD}:/app harrisonai/terraform:latest
 ```
+
+Note that `/app` is the default working directory.
 
 ## 📖 License
 This project is licensed under [Apache License 2.0](https://raw.githubusercontent.com/harrison-ai/harrison-ai-terraform-docker/master/LICENSE)
