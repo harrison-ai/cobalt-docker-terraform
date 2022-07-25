@@ -1,10 +1,10 @@
 
 .DEFAULT_GOAL := help
 
-## publish version=<version>:   build docker images and push to registry
+## publish tag=<tag>:	        build docker images and push to registry
 publish:
-	@test -n "$(version)" || ( echo "version must be set" && return 1 )
-	./scripts/publish.sh $(version)
+	@test -n "$(tag)" || ( echo "tag must be set" && return 1 )
+	./scripts/publish.sh $(tag)
 
 ## help:                        show this help
 help:

@@ -19,4 +19,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Build and publish the images
-        run: make publish version=${GITHUB_REF##*/}
+        run: make publish tag=${GITHUB_REF##*/}
