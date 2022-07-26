@@ -19,5 +19,5 @@ docker tag "${IMAGE_NAME}" "${IMAGE_NAME}:${TAG}"
 docker tag "${IMAGE_NAME}" "${IMAGE_NAME}:latest"
 
 echo "Pushing '${IMAGE_NAME}:${TAG}' and '${IMAGE_NAME}:latest'"
-docker push "${IMAGE_NAME}:latest"
 docker push "${IMAGE_NAME}:${TAG}"
+docker push "${IMAGE_NAME}:latest"
