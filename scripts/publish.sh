@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Publish the current git HEAD to dockerhub, if it matches the given tag.
+# Publish the current git HEAD to dockerhub.
 #
 
 set -e
@@ -14,10 +14,6 @@ fi
 
 TAG="$1"
 
-if [ "$(git describe --exact-match --tags HEAD 2> /dev/null )" != "$TAG" ]; then
-    >&2 echo "The current HEAD must be tagged as tag: ${TAG}"
-    exit 2
-fi
 if git diff --exit-code > /dev/null; then true; else 
     >&2 echo "Refusing to publish from a working dir with unstaged changes"
     exit 3
