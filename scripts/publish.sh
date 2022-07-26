@@ -1,31 +1,23 @@
 #!/usr/bin/env bash
 #
-# Publish the current git HEAD to dockerhub.
+# Publish the given image to dockerhub.
 #
 
 set -e
 
-IMAGE="harrisonai/terraform"
-
-if [  "$#" -ne 1 ]; then
-    >&2 echo "Usage: $(basename $0) <tag>"
+if [  "$#" -ne 2 ]; then
+    >&2 echo "Usage: $(basename $0) <image-name> <tag>"
     exit 1
 fi
 
-TAG="$1"
+IMAGE_NAME="$1"
+TAG="$2"
 
-if git diff --exit-code > /dev/null; then true; else 
-    >&2 echo "Refusing to publish from a working dir with unstaged changes"
-    exit 3
-fi
-if git diff --cached --exit-code > /dev/null; then true; else
-    >&2 echo "Refusing to publish from a working dir with uncommited changes"
-    exit 4
-fi
+echo "Tagging image ${IMAGE_NAME} with tags: '${IMAGE_NAME}:${TAG}', '${IMAGE_NAME}:latest'"
 
-echo "Building image ${IMAGE} with tags: '${TAG}', 'latest'"
+docker tag "${IMAGE_NAME}" "${IMAGE_NAME}:${TAG}"
+docker tag "${IMAGE_NAME}" "${IMAGE_NAME}:latest"
 
-docker build -t "${IMAGE}:latest" -t "${IMAGE}:${TAG}" .
-
-docker push "${IMAGE}:latest"
-docker push "${IMAGE}:${TAG}"
+echo "Pushing '${IMAGE_NAME}:${TAG}' and '${IMAGE_NAME}:latest'"
+docker push "${IMAGE_NAME}:latest"
+docker push "${IMAGE_NAME}:${TAG}"
