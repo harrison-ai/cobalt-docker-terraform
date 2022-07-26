@@ -1,31 +1,31 @@
 FROM debian:bullseye-slim as builder
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update \
   && apt-get install --no-install-recommends -y \
   ca-certificates \
   curl \
-  jq \
-  unzip \
-  wget && \
+  unzip && \
   rm -rf /var/lib/apt/lists/*
 
-# terraform
-RUN TERRAFORM=$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r .current_version) \
-    && wget --no-verbose --tries=5 --timeout=5 \
-    "https://releases.hashicorp.com/terraform/${TERRAFORM}/terraform_${TERRAFORM}_linux_amd64.zip" -O /tmp/terraform.zip && \
-    unzip /tmp/terraform.zip -d /tmp && \
-    chmod +x /tmp/terraform
+ARG TERRAFORM=1.2.5
+RUN curl "https://releases.hashicorp.com/terraform/${TERRAFORM}/terraform_${TERRAFORM}_linux_amd64.zip" -o /tmp/terraform.zip && \
+    unzip -q /tmp/terraform.zip -d /usr/local/bin && \
+    chmod +x /usr/local/bin/terraform && \
+    rm -f /tmp/terraform.zip
 
-# awscli
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
-    unzip awscliv2.zip && \
-    ./aws/install
+ARG AWS=2.7.18
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS}.zip" -o "/tmp/awscliv2.zip" && \
+    unzip -q /tmp/awscliv2.zip -d /tmp && \
+    /tmp/aws/install && \
+    rm -rf /tmp/aws /tmp/awscliv2.zip
 
 FROM python:3-slim-bullseye
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-COPY --from=builder /tmp/terraform /usr/local/bin/terraform
+COPY --from=builder /usr/local/bin/terraform /usr/local/bin/terraform
 COPY --from=builder /usr/local/aws-cli /usr/local/aws-cli
 
 RUN ln -s /usr/local/aws-cli/v2/current/dist/aws /usr/local/bin/aws && \

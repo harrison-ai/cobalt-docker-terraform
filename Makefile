@@ -1,10 +1,15 @@
 
 .DEFAULT_GOAL := help
+IMAGE_NAME := harrisonai/terraform
 
-## publish tag=<tag>:	        build docker images and push to registry
+## build:                       build the docker image
+build:
+	./scripts/build.sh $(IMAGE_NAME)
+
+## publish:                     push the docker image to registry with the given TAG
 publish:
-	@test -n "$(tag)" || ( echo "tag must be set" && return 1 )
-	./scripts/publish.sh $(tag)
+	@test -n "${TAG}" || ( echo "TAG environment variable must be set" && return 1 )
+	./scripts/publish.sh $(IMAGE_NAME) ${TAG}
 
 ## help:                        show this help
 help:
