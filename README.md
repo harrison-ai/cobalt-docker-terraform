@@ -11,6 +11,7 @@ The image is based on the [official Python 3 Docker image](https://hub.docker.co
 * [Terraform CLI](https://www.terraform.io/docs/commands/index.html)
 * [AWS CLI](https://aws.amazon.com/cli/)
 * [Git](https://git-scm.com/)
+* [OpenSSH Client](https://www.openssh.com)
 
 ## 🚀 Usage
 

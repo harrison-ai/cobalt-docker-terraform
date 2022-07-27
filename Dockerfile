@@ -30,7 +30,9 @@ COPY --from=builder /usr/local/aws-cli /usr/local/aws-cli
 
 RUN ln -s /usr/local/aws-cli/v2/current/dist/aws /usr/local/bin/aws && \
     apt-get update && \
-    apt-get install --no-install-recommends -y git && \
+    apt-get install --no-install-recommends -y \
+    openssh-client \
+    git && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
