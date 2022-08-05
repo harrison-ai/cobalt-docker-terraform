@@ -1,4 +1,5 @@
-# harrison-docker-terraform
+# cobalt-docker-terraform
+
 Lightweight Docker image including Terraform CLI and AWS CLI
 
 ## 💡 Motivation
