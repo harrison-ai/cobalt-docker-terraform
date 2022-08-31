@@ -21,10 +21,13 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          outputs: type=image
+          outputs: type=image,name=harrisonai/terraform
           tags: harrisonai/terraform:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Show images
+        run: docker images
 
       - name: Show image history
         run: docker image history harrisonai/terraform
