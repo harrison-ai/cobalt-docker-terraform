@@ -21,7 +21,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          load: true
+          outputs: type=image
           tags: harrisonai/terraform:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
