@@ -26,8 +26,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Show images
-        run: docker images
+      - name: Show image history
+        run: docker image history harrisonai/terraform
 
       - name: Build the image
         run: make build
