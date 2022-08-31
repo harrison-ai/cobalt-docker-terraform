@@ -42,6 +42,9 @@ RUN ln -s /usr/local/aws-cli/v2/current/dist/aws /usr/local/bin/aws && \
     git && \
     rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p ~/.ssh && \
+    ssh-keyscan github.com 2>/dev/null > ~/.ssh/known_hosts
+
 WORKDIR /app
 
 ENTRYPOINT ["terraform"]
