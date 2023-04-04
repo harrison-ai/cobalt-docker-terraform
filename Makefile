@@ -1,6 +1,5 @@
-
 .DEFAULT_GOAL := help
-IMAGE_NAME := harrisonai/terraform
+IMAGE_NAME := ghcr.io/harrison-ai/terraform
 
 ## build:                       build the docker image
 build:
