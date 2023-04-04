@@ -19,7 +19,7 @@ The image is based on the [official Python 3 Docker image](https://hub.docker.co
 To launch the Terraform CLI:
 
 ```bash
-docker run -it -v ${PWD}:/app harrisonai/terraform:latest
+docker run -it -v ${PWD}:/app ghcr.io/harrisonai/terraform:latest
 ```
 
 Note that `/app` is the default working directory.
