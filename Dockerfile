@@ -9,19 +9,19 @@ RUN apt-get update \
   unzip && \
   rm -rf /var/lib/apt/lists/*
 
-ARG TERRAFORM_VERSION=1.2.5
+ARG TERRAFORM_VERSION=1.5.1
 RUN curl "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -o /tmp/terraform.zip && \
     unzip -q /tmp/terraform.zip -d /usr/local/bin && \
     chmod +x /usr/local/bin/terraform && \
     rm -f /tmp/terraform.zip
 
-ARG AWS_VERSION=2.7.18
+ARG AWS_VERSION=2.12.3
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_VERSION}.zip" -o "/tmp/awscliv2.zip" && \
     unzip -q /tmp/awscliv2.zip -d /tmp && \
     /tmp/aws/install && \
     rm -rf /tmp/aws /tmp/awscliv2.zip
 
-ARG KUBE_VERSION=1.22.12
+ARG KUBE_VERSION=1.27.3
 RUN curl -LO "https://dl.k8s.io/release/v${KUBE_VERSION}/bin/linux/amd64/kubectl" && \
     chmod +x kubectl && \
     mv kubectl /usr/local/bin
