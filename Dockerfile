@@ -29,7 +29,8 @@ RUN curl -LO "https://dl.k8s.io/release/v${KUBE_VERSION}/bin/linux/amd64/kubectl
 ARG TFLINT_VERSION=0.48.0
 RUN curl -L "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip" -o /tmp/tflint.zip && \
     unzip -q /tmp/tflint.zip -d /tmp && \
-    install -c -v /tmp/tflint /usr/local/bin/
+    install -c -v /tmp/tflint /usr/local/bin/ && \
+    rm -rf /tmp/tflint /tmp/tflint.zip
 
 FROM python:3-slim-bullseye
 
