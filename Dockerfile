@@ -26,6 +26,11 @@ RUN curl -LO "https://dl.k8s.io/release/v${KUBE_VERSION}/bin/linux/amd64/kubectl
     chmod +x kubectl && \
     mv kubectl /usr/local/bin
 
+ARG SOPS_VERSION=3.8.0
+RUN curl -LO "https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64" && \
+    mv "sops-v${SOPS_VERSION}.linux.amd64" /usr/local/bin/sops && \
+    chmod +x /usr/local/bin/sops 
+    
 FROM python:3-slim-bullseye
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -33,6 +38,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 COPY --from=builder /usr/local/bin/terraform /usr/local/bin/terraform
 COPY --from=builder /usr/local/aws-cli /usr/local/aws-cli
 COPY --from=builder /usr/local/bin/kubectl /usr/local/bin/kubectl
+COPY --from=builder /usr/local/bin/sops /usr/local/bin/sops
 
 RUN ln -s /usr/local/aws-cli/v2/current/dist/aws /usr/local/bin/aws && \
     apt-get update && \
