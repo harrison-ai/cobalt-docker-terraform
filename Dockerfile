@@ -30,6 +30,11 @@ ARG SOPS_VERSION=3.8.0
 RUN curl --connect-timeout 30 --retry 5 -L "https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64" -o "/usr/local/bin/sops" && \
     chmod +x /usr/local/bin/sops
     
+ARG TFLINT_VERSION=0.48.0
+RUN curl --connect-timeout 30 --retry 5 -L "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip" -o /tmp/tflint.zip && \
+    unzip -q /tmp/tflint.zip -d /tmp && \
+    install -c -v /tmp/tflint /usr/local/bin/
+
 FROM python:3-slim-bullseye
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -38,6 +43,7 @@ COPY --from=builder /usr/local/bin/terraform /usr/local/bin/terraform
 COPY --from=builder /usr/local/aws-cli /usr/local/aws-cli
 COPY --from=builder /usr/local/bin/kubectl /usr/local/bin/kubectl
 COPY --from=builder /usr/local/bin/sops /usr/local/bin/sops
+COPY --from=builder /usr/local/bin/tflint /usr/local/bin/tflint
 
 RUN ln -s /usr/local/aws-cli/v2/current/dist/aws /usr/local/bin/aws && \
     apt-get update && \
