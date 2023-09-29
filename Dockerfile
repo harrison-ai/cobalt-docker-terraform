@@ -26,6 +26,11 @@ RUN curl -LO "https://dl.k8s.io/release/v${KUBE_VERSION}/bin/linux/amd64/kubectl
     chmod +x kubectl && \
     mv kubectl /usr/local/bin
 
+ARG TFLINT_VERSION=0.48.0
+RUN curl --connect-timeout 30 --retry 5 -L "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip" -o /tmp/tflint.zip && \
+    unzip -q /tmp/tflint.zip -d /tmp && \
+    install -c -v /tmp/tflint /usr/local/bin/
+
 FROM python:3-slim-bullseye
 
 ARG DEBIAN_FRONTEND=noninteractive
@@ -33,6 +38,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 COPY --from=builder /usr/local/bin/terraform /usr/local/bin/terraform
 COPY --from=builder /usr/local/aws-cli /usr/local/aws-cli
 COPY --from=builder /usr/local/bin/kubectl /usr/local/bin/kubectl
+COPY --from=builder /usr/local/bin/tflint /usr/local/bin/tflint
 
 RUN ln -s /usr/local/aws-cli/v2/current/dist/aws /usr/local/bin/aws && \
     apt-get update && \
