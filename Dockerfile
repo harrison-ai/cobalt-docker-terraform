@@ -27,10 +27,8 @@ RUN curl -LO "https://dl.k8s.io/release/v${KUBE_VERSION}/bin/linux/amd64/kubectl
     mv kubectl /usr/local/bin
 
 ARG SOPS_VERSION=3.8.0
-RUN curl -L "https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64" -o "/tmp/sops.linux.amd64" && \
-    mv "/tmp/sops.linux.amd64" /usr/local/bin/sops && \
-    chmod +x /usr/local/bin/sops && \
-    rm -rf "/tmp/sops.linux.amd64"
+RUN curl -L "https://github.com/getsops/sops/releases/download/v${SOPS_VERSION}/sops-v${SOPS_VERSION}.linux.amd64" -o "/usr/local/bin/sops" && \
+    chmod +x /usr/local/bin/sops
     
 FROM python:3-slim-bullseye
 
