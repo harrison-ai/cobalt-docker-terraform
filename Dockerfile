@@ -27,7 +27,7 @@ RUN curl -LO "https://dl.k8s.io/release/v${KUBE_VERSION}/bin/linux/amd64/kubectl
     mv kubectl /usr/local/bin
 
 ARG TFLINT_VERSION=0.48.0
-RUN curl -L "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip" -o /tmp/tflint.zip && \
+RUN curl --connect-timeout 30 --retry 5 -L "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip" -o /tmp/tflint.zip && \
     unzip -q /tmp/tflint.zip -d /tmp && \
     install -c -v /tmp/tflint /usr/local/bin/
 
