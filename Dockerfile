@@ -49,8 +49,9 @@ RUN ln -s /usr/local/aws-cli/v2/current/dist/aws /usr/local/bin/aws && \
     apt-get update && \
     apt-get install --no-install-recommends -y \
     curl \
-    openssh-client \
-    git && \
+    git \
+    jq \
+    openssh-client && \
     rm -rf /var/lib/apt/lists/*
 
 RUN ssh-keyscan github.com 2>/dev/null > /etc/ssh/ssh_known_hosts
