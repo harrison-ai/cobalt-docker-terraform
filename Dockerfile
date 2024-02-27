@@ -9,13 +9,13 @@ RUN apt-get update \
   unzip && \
   rm -rf /var/lib/apt/lists/*
 
-ARG TERRAFORM_VERSION=1.6.2
+ARG TERRAFORM_VERSION=1.7.4
 RUN curl "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -o /tmp/terraform.zip && \
     unzip -q /tmp/terraform.zip -d /usr/local/bin && \
     chmod +x /usr/local/bin/terraform && \
     rm -f /tmp/terraform.zip
 
-ARG AWS_VERSION=2.13.30
+ARG AWS_VERSION=2.15.23
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWS_VERSION}.zip" -o "/tmp/awscliv2.zip" && \
     unzip -q /tmp/awscliv2.zip -d /tmp && \
     /tmp/aws/install && \
